@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent()  }} | Création {% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/create.css') }}">
+    {% endblock %}
+
+{% block body %}
+    {% if editMode %}
+        <h1 class="animate__animated animate__backInRight">Modification d'un Patient</h1>
+    {% else %}
+        <h1 class="animate__animated animate__backInRight">Création d'un Patient</h1>
+    {% endif %}
+
+    <div id="form_container" class="container justify-content-around formcreate animate__animated animate__backInUp">
+        <div class="form">
+        {{ form_start(FormPatient) }}
+
+        {{ form_row(FormPatient.civilite,{'attr': {'placeholder': "Civilité du Patient"}}) }}
+
+        {{ form_row(FormPatient.nom,{'attr': {'placeholder': "Nom du Patient"}}) }}
+
+        {{ form_row(FormPatient.prenom,{'attr': {'placeholder': "Prénom du Patient"}}) }}
+
+        {{ form_row(FormPatient.taille,{'attr': {'placeholder': "Taille du Patient en cm"}}) }}
+
+        {{ form_row(FormPatient.poids,{'attr': {'placeholder': "Poids du Patient en Kg"}}) }}
+
+        {{ form_row(FormPatient.pression,{'attr': {'placeholder': "Tension artérielle du Patient"}}) }}
+
+        </div>
+        <div class="form">
+        {{ form_row(FormPatient.date_naissance) }}
+
+        {{ form_row(FormPatient.email,{'attr': {'placeholder': "Email du Patient"}}) }}
+
+        {{ form_row(FormPatient.telephone,{'attr': {'placeholder': "Numéro de téléphone"}}) }}
+
+        {{ form_row(FormPatient.secu,{'label': 'Numéro Sécurité Social','attr': {'placeholder': "Numéro de Securité Sociale"}}) }}
+
+        {{ form_row(FormPatient.antecedents,{'label': 'Antécédent', 'attr': {'placeholder': "Antécédent et historique"}}) }}
+
+        <button type="submit" class="btn btn-primary">
+            {% if editMode %}
+                Mettre à jour
+            {% else %}
+                Enregistrer
+            {% endif %}
+        </button>
+
+
+        {{ form_end(FormPatient) }}
+        </div>
+    </div>
+
+
+{% endblock %}
+
+

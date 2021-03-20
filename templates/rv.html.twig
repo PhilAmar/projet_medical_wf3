@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %} {{ parent()}} | Rdv {% endblock %}
+{% block body %}
+
+    <h1>Page des Rendez-Vous</h1>
+    <div class="container animate__animated animate__bounceInUp" style="width: 60% ">
+
+
+            <div id="card-rdv" class="card">
+                <div class="card-body">
+                    <h5 class="card-title"> Nom du patient : {{ patient.nom }}</h5>
+                    <h5 class="card-title">Prénom du patient : {{ patient.prenom }}</h5>
+                    <p class="card-text">Numero de Sécurité Sociale : {{ patient.secu }}</p>
+                </div>
+            </div>
+
+
+
+            {{ form_start(formRdv) }}
+
+            {{ form_row(formRdv.dateRdv,{label: "Date du Rendez-Vous"}) }}
+            {{ form_row(formRdv.heureRdv, {label: "Heure du Rendez-Vous"}) }}
+            {{ form_row(formRdv.motif) }}
+
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+
+            {{ form_end(formRdv) }}
+    </div>
+            <br> <br>
+
+
+{% endblock %}

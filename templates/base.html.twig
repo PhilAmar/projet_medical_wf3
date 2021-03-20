@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}MedicalHelp{% endblock %}</title>
+
+        <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css" />
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+
+        <link href="https://fonts.googleapis.com/css2?family=Sriracha&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&family=Sriracha&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/titles.css') }}">
+
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body class="login100-more">
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark ma-nav">
+        <a class="logo" href="{{ path('index') }}"> <img src="{{ asset('img/logo-medical.png') }}" alt=""> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse recherche" id="navbarColor01">
+            <div>
+            <ul class="navbar-nav fontbase mr-sm-auto" >
+                    <li class="nav-item fontbase">
+                        <a class="nav-link" href="{{ path('index') }}">
+                            <span class="fontbase"></span>
+                            <span class="fontbase"></span>
+                            <span class="fontbase">Accueil</span>
+                        </a>
+                    </li>
+                    <li class="nav-item fontbase">
+                        <a class="nav-link" href="{{ path('app_index_create') }}">
+                            <span class="fontbase"></span>
+                            <span class="fontbase"></span>
+                            <span class="fontbase">Créer un patient</span>
+                        </a>
+                    </li>
+                    <li class="nav-item fontbase">
+                        <a class="nav-link" href="{{ path('app_index_find') }}">
+                            <span class="fontbase"></span>
+                            <span class="fontbase"></span>
+                            <span class="fontbase">Liste des Patients</span>
+                        </a>
+                    </li>
+                    <li class="nav-item fontbase">
+                        <a class="nav-link" href="{{ path('app_utilisateur_deconnexion') }}">
+                            <span class="fontbase"></span>
+                            <span class="fontbase"></span>
+                            <span class="fontbase">Deconnexion</span>
+                        </a>
+                    </li>
+
+
+                    <li class="vidal nav-item">
+                    <a class="vidal" href="https://www.vidal.fr/" target="_blank"> <img src="{{ asset('img/vidal.png') }}" alt=""> </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="loupe">
+                <form class="form-inline my-2 my-md-0 text-center"  method="get" action="{{ path('searchrender') }}">
+                    <input id="searchbar" class="form-control mr-sm-2" type="text" placeholder="Nom du patient" name="search">
+                    <button id="search-btn" class="btn my-2 my-sm-0" type="submit">
+                        <img src="{{ asset('img/research.png') }}" alt=""></button>
+                </form>
+            </div>
+        </div>
+
+    </nav>
+
+
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="nav-item ml-2 mt-2" style="width: 25%">
+                <p><a class=" btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1"
+                      role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Administrateur
+                         </a>
+                </p>
+                <div class="row ">
+                    <div class="col">
+                        <div class="collapse multi-collapse " id="multiCollapseExample1">
+                            <div>
+                                <nav class="navbar navbar-expand-sm navbar-dark ">
+
+                                    <div class="collapse navbar-collapse text-center" id="navbarColor01">
+                                        <ul class="navbar-nav mr-auto" >
+                                            <li class="nav-item  btn text-center btn-primary">
+                                                <a class="nav-link" href="{{ path('app_admin_utilisateur_inscription') }}">Créer un utilisateur</a>
+                                            </li>
+
+                                            <li class="nav-item  btn text-center btn-primary" >
+                                                <a class="nav-link" href="{{ path('app_admin_utilisateur_listeutilisateurs') }}">Liste des utilisateurs</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+
+        <div class="container">
+            <div class="container">
+                {% for type, messages in app.session.flashBag.all %}
+                    {% if type == 'error' %}
+                        {% set type = 'danger' %}
+                    {% endif %}
+                    {% if type == 'update' %}
+                        {% set type = 'info' %}
+                    {% endif %}
+                    {% if type == 'success' %}
+                        {% set type = 'success' %}
+                    {% endif %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }} mt-2">
+                            {{ message|raw }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+            </div>
+                {% block body %}{% endblock %}
+        </div>
+
+        <footer>
+
+            <p class="text-center text-white mb-0">Projet de groupe Application Médicale de Gestion des patients</p>
+            <p class="text-center text-white mb-0"> Copyright &copy; Philippe Cesaire et Abdallah</p>
+            <p class="text-center text-white mb-0">WebForce3 session Mars 2020</p>
+
+        </footer>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            $("#searchbar").autocomplete({
+                source: function (request, response) {
+                    $.get({
+                        url: "{{ path('app_search_autocomplete')}}",
+                        data: {
+                            query: request.term,
+                        },
+                        dataType: 'json',
+                        method: 'get'
+                    }).done(function (data) {
+                        response(data);
+                    });
+                },
+                delay: 100,
+                minLength: 2
+            })
+        </script>
+        {% block javascripts %}{% endblock %}
+
+
+
+    </body>
+</html>

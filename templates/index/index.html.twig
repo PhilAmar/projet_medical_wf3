@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent()}} | Accueil {% endblock %}
+
+{% block body %}
+
+    <div class="container bonjour">
+
+        <h4 class="animate__animated animate__backInDown">Bonjour {{ app.user.fonction }} <strong>{{ app.user.nomComplet }}</strong> </h4>
+        <span class="text-right">Nous sommes le : {{ date('now')|date('d/m/Y') }}</span>
+
+          Il est : <strong> {{ date('+2hours')|date('H:i') }} </strong> <br> <br>
+
+    </div>
+    <div class="container animate__animated animate__bounceInUp">
+
+        <div class="card text-white bg-dark mb-2">
+            <div class="card-body">
+                <h5 class="card-title text-center" >Vos Rendez-vous aujourd'hui</h5>
+            </div>
+        </div>
+        <table class="table table-hover">
+            <thead>
+            <tr class="thead-dark entete1">
+                <th scope="col">Heure</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Motif</th>
+            </tr>
+            </thead>
+
+            {% for rdv in rdvs %}
+                <tbody>
+                <tr class="table-light">
+                    <th scope="row"><a href="{{ path('app_index_visite', {id:rdv.patient.id}) }}">{{ rdv.heureRdv | date('H:i') }}</a></th>
+                    <td>{{ rdv.patient.nom }}</td>
+                    <td>{{ rdv.patient.prenom }}</td>
+                    <td>{{ rdv.motif }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+
+
+    </div>
+    <hr>
+    <div class="text-right">
+        <a href="{{ path('app_index_listerdv') }}" > <button type="button" class="btn btn-primary btn-lg "> Voir vos autres RDV</button></a>
+    </div>
+    <br>
+
+
+
+
+{% endblock %}

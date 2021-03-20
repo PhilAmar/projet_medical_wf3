@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ parent()}} | Visite {% endblock %}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/visite.css') }}">
+    {% endblock %}
+
+
+{% block body %}
+
+    <h1 class="animate__animated animate__backInRight">Données du patient</h1>
+    <h3 class="animate__animated animate__backInRight">Mise à jour</h3>
+
+    <div id="visite-container" class="container animate__animated animate__backInRight">
+
+            <div id="visite-card" class="col-sm mt-1">
+
+                <p>Nom du patient : {{ patient.nom }}</p>
+                <p> Prénom du patient : {{ patient.prenom }}</p>
+                <p> Taille du patient :
+                    {% if patient.taille is not null %}
+                    {{ patient.taille }}
+                    Cm{% endif %}</p>
+                <p> Poids du patient : {% if patient.poids is not null %}
+                        {{ patient.poids }}
+                        Kg{% endif %}</p>
+                <p> Tension du patient : {{ patient.pression }}</p>
+                <p> Numero de Sécurité Sociale : {{ patient.secu }}</p>
+            </div>
+
+
+
+        <div id="visite-form">
+
+
+            {{ form_start(FormVisite) }}
+
+            {{ form_row(FormVisite.taille,{'attr': {'placeholder': "Taille du Patient en cm"}}) }}
+            {{ form_row(FormVisite.poids,{'attr': {'placeholder': "Poids du Patient en Kg"}}) }}
+            {{ form_row(FormVisite.pression,{'attr': {'placeholder': "Tension artérielle du Patient"}}) }}
+            {{ form_row(FormVisite.motifVisite) }}
+            {{ form_row(FormVisite.traitement) }}
+
+            <button type="submit" class="btn btn-primary">Mettre à jour la fiche du patient</button>
+
+            {{ form_end(FormVisite) }}
+
+        </div>
+    </div>
+{% endblock %}

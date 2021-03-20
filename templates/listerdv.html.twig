@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Rdv{% endblock %}
+
+{% block body %}
+
+
+    <div class="container animate__animated animate__backInDown">
+        <div class="card text-white bg-dark mb-2 entete">
+            <div class="card-body ">
+                <h5 class="card-title text-center pb-0">Vos Rendez-vous à venir</h5>
+            </div>
+        </div>
+        <section class="fichevisite">
+
+
+            <table class="table table-hover">
+                <thead>
+                <tr class="thead-dark entete1">
+                    <th scope="col">Date</th>
+                    <th scope="col">Heure</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col">Motif</th>
+                </tr>
+
+                </thead>
+                {% for rdv in rdvs %}
+
+                    <tbody>
+                    <tr class="table-light">
+                        <td><a href="{{ path('app_index_visite', {id:rdv.patient.id}) }}">{{ rdv.dateRdv | date('d/m/Y') }}</a></td>
+                        <td>{{ rdv.heureRdv | date('H:i') }}</td>
+                        <td>{{ rdv.patient.nom }}</td>
+                        <td>{{ rdv.patient.prenom }}</td>
+                        <td>{{ rdv.motif }}</td>
+                    </tr>
+                    </tbody>
+
+
+                {% endfor %}
+            </table>
+
+        </section>
+
+    </div>
+
+{% endblock %}
